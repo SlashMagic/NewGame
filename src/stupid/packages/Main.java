@@ -10,8 +10,8 @@ import org.newdawn.slick.Color;
 
 public class Main {
 
-	int width = 960;
-	int height = 540;
+	int width = 1920;
+	int height = 1080;
 	
 	boolean isFullScreen = true;
 	
@@ -40,7 +40,9 @@ public class Main {
 			System.out.print("WTF");
 			
 		}
-
+		
+		lastFPS = getTime();
+		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	    GL11.glShadeModel(GL11.GL_SMOOTH);        
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -57,7 +59,7 @@ public class Main {
 		GL11.glOrtho(0, width, height, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
-		World gameWorld = new World();
+		World gameWorld = new World(getDelta());
 		
 		
 		while(!Display.isCloseRequested() && !exit){
@@ -79,6 +81,7 @@ public class Main {
 			Display.update();
 			
 			Display.sync(144);
+			
 			
 		}
 		

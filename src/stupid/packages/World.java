@@ -9,9 +9,17 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class World {
 	
+	boolean isPaused = false;
+	
+	MouseHandler gameMouse;
+	
 	Texture background = null;
 	
-	public World(){
+	Character mainCharacter;
+	
+	public World(int delta){
+		mainCharacter = new Character(100, 100, -1, 1, 90, delta);
+		gameMouse = new MouseHandler();
 		loadData();
 	}
 	
@@ -29,9 +37,15 @@ public class World {
 	
 	public void update(int delta){
 		
-		
-		
 		drawTexture(background, 0, 0);
+		if(isPaused){
+			gameMouse.update();
+		}
+		else if(!isPaused){
+			mainCharacter.update();
+			gameMouse.update();
+			mainCharacter.draw();
+		}
 	}
 	
 	public void drawTexture(Texture newTexture, int newX, int newY){
