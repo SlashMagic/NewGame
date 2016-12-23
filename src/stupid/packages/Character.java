@@ -16,6 +16,8 @@ public class Character {
 	float xVel = 1f;
 	float yVel = 1f;
 	
+	int angle = 0;
+	
 	Texture sprite_1;
 	
 	public Character(World newWorld) {
@@ -50,22 +52,37 @@ public class Character {
 		if(y > 125 && yVel > 0){
 			yVel = -yVel;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_W) && yVel < 0){
-			x += xVel;
-			y = y + yVel - 0.8f;
+		if(Keyboard.isKeyDown(Keyboard.KEY_W)){
+			if(xVel < 0){
+				x += xVel - 0.5;
+			}
+			else{
+				x += xVel + 0.5;
+			}
+			if(yVel < 0){
+				y += yVel - 0.5;
+			}
+			else{
+				y += yVel + 0.5;
+			}
 		}
-		else if(Keyboard.isKeyDown(Keyboard.KEY_S) && yVel > 0){
-			x += xVel;
-			y = y + yVel + 0.8f;
+		else if(Keyboard.isKeyDown(Keyboard.KEY_S)){
+			if(xVel < 0){
+				x += xVel + 0.5;
+			}
+			else{
+				x += xVel - 0.5;
+			}
+			if(yVel < 0){
+				y += yVel + 0.5;
+
+			}
+			else{
+				y += yVel - 0.5;
+
+			}
 		}
-		else if(Keyboard.isKeyDown(Keyboard.KEY_A) && xVel < 0){
-			x = x + xVel - 0.8f;
-			y += yVel;
-		}
-		else if(Keyboard.isKeyDown(Keyboard.KEY_D) && xVel > 0){
-			x = x + xVel + 0.8f;
-			y += yVel;
-		}
+		
 		else{
 			x += xVel;
 			y += yVel;
@@ -77,6 +94,14 @@ public class Character {
 		newTexture.bind();
 		
 		GL11.glBegin(GL11.GL_QUADS);
+			
+		GL11.glPushMatrix();
+		
+		GL11.glTranslated(x + 4, y + 4, 0);
+		
+		GL11.glRotated(angle + 180, 0, 0, 1);
+		
+		GL11.glTranslated(-(x + 4), -(y + 4), 0);
 			
 			GL11.glTexCoord2f(0,0);
 			GL11.glVertex2f(x,y);
