@@ -11,6 +11,8 @@ public class World {
 	
 	Texture background = null;
 	
+	Character gameCharacter = new Character(this);
+
 	public World(){
 		loadData();
 	}
@@ -29,9 +31,9 @@ public class World {
 	
 	public void update(int delta){
 		
-		
-		
 		drawTexture(background, 0, 0);
+		
+		gameCharacter.update(delta);
 	}
 	
 	public void drawTexture(Texture newTexture, int newX, int newY){

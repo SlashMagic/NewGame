@@ -10,8 +10,8 @@ import org.newdawn.slick.Color;
 
 public class Main {
 
-	int width = 960;
-	int height = 540;
+	int width = 240;
+	int height = 135;
 	
 	boolean isFullScreen = true;
 	
@@ -57,6 +57,9 @@ public class Main {
 		GL11.glOrtho(0, width, height, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
+		Display.setVSyncEnabled(true);
+
+		
 		World gameWorld = new World();
 		
 		
@@ -79,6 +82,7 @@ public class Main {
 			Display.update();
 			
 			Display.sync(144);
+			
 			
 		}
 		
