@@ -13,15 +13,21 @@ public class Character {
 	float x = 50;
 	float y = 50;
 	
-	float xVel = 1f;
-	float yVel = 1f;
+	float xVel = 0.5f;
+	float yVel = 0.5f;
 	
-	int angle = 0;
+	float angle = 90;
 	
 	Texture sprite_1;
 	
+	World gameWorld;
+	
+	int attackTimer = 0;
+	
+	int energy;
+	
 	public Character(World newWorld) {
-		
+		gameWorld = newWorld;
 		loadData();
 	
 	}
@@ -54,55 +60,74 @@ public class Character {
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)){
 			if(xVel < 0){
-				x += xVel - 0.5;
+				x += xVel - 0.25;
 			}
 			else{
-				x += xVel + 0.5;
+				x += xVel + 0.25;
 			}
 			if(yVel < 0){
-				y += yVel - 0.5;
+				y += yVel - 0.25;
 			}
 			else{
-				y += yVel + 0.5;
+				y += yVel + 0.25;
 			}
 		}
 		else if(Keyboard.isKeyDown(Keyboard.KEY_S)){
 			if(xVel < 0){
-				x += xVel + 0.5;
+				x += xVel + 0.25;
 			}
 			else{
-				x += xVel - 0.5;
+				x += xVel - 0.25;
 			}
 			if(yVel < 0){
-				y += yVel + 0.5;
+				y += yVel + 0.25;
 
 			}
 			else{
-				y += yVel - 0.5;
+				y += yVel - 0.25;
 
 			}
 		}
-		
 		else{
 			x += xVel;
 			y += yVel;
 		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+			angle -= 7;
+			if(angle < -180){
+				angle = 180;
+			}
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			angle += 7;
+			if(angle > 180){
+				angle = -180;
+			}
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && attackTimer > 1000){
+			gameWorld.createProjectile(x, y, angle);
+			attackTimer = 0;
+		}
+		
+		attackTimer += delta;
+		
 		drawTexture(sprite_1,x, y);
 	}
 	
 	public void drawTexture(Texture newTexture, float x, float y){
 		newTexture.bind();
 		
-		GL11.glBegin(GL11.GL_QUADS);
-			
 		GL11.glPushMatrix();
 		
 		GL11.glTranslated(x + 4, y + 4, 0);
 		
-		GL11.glRotated(angle + 180, 0, 0, 1);
+		GL11.glRotated(angle, 0, 0, 1);
 		
 		GL11.glTranslated(-(x + 4), -(y + 4), 0);
-			
+		
+		GL11.glBegin(GL11.GL_QUADS);
+				
 			GL11.glTexCoord2f(0,0);
 			GL11.glVertex2f(x,y);
 			GL11.glTexCoord2f(1,0);
@@ -113,6 +138,9 @@ public class Character {
 			GL11.glVertex2f(x,y+newTexture.getTextureHeight());	
     		
     	GL11.glEnd();
+    	
+    	GL11.glPopMatrix();
+	
 	}
 
 }

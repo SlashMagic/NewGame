@@ -1,6 +1,7 @@
 package stupid.packages;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -9,10 +10,13 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class World {
 	
-	Texture background = null;
+	Texture background;
+	Texture border;
 	
 	Character gameCharacter = new Character(this);
-
+	
+	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	
 	public World(){
 		loadData();
 	}
@@ -22,11 +26,15 @@ public class World {
 		try{
 			
 			background = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("res/bg/background_1.png"), GL11.GL_NEAREST);
-			
+			border = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("res/bg/border_1.png"), GL11.GL_NEAREST);
 		}
 		catch (IOException e){
 			e.printStackTrace();
 		}	
+	}
+	
+	public void createProjectile(float x, float y, float angle){
+		projectiles.add(new Projectile(this, x, y, angle));
 	}
 	
 	public void update(int delta){
@@ -34,6 +42,12 @@ public class World {
 		drawTexture(background, 0, 0);
 		
 		gameCharacter.update(delta);
+		
+		for(int i = 0; i < projectiles.size(); i++){
+			projectiles.get(i).update();
+		}
+		
+		drawTexture(border, 0, 0);
 	}
 	
 	public void drawTexture(Texture newTexture, int newX, int newY){
