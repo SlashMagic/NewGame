@@ -1,20 +1,16 @@
 package stupid.packages;
 
-import java.io.IOException;
-
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+
 
 public class Character {
 	
 	float x = 50;
 	float y = 50;
 	
-	float xVel = 0.5f;
-	float yVel = 0.5f;
+	float xVel = 0.4f;
+	float yVel = 0.4f;
 	
 	float angle = 90;
 	
@@ -24,24 +20,26 @@ public class Character {
 	
 	int attackTimer = 0;
 	
-	int energy;
+	int energy = 1000;
 	
-	public Character(World newWorld) {
-		gameWorld = newWorld;
-		loadData();
+	boolean ded = false;
 	
+	float getX(){
+		return x;
 	}
 	
-	public void loadData(){
+	float getY(){
+		return y;
+	}
+	
+	boolean getDed(){
+		return ded;
+	}
+	
+	public Character(World newWorld, Texture newTexture) {
 		
-		try{
-			
-			sprite_1 = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("res/sprites/sprite_1.png"), GL11.GL_NEAREST);
-		
-		}
-		catch(IOException e){
-			
-		}
+		sprite_1 = newTexture;
+		gameWorld = newWorld;
 	}
 	
 	public void update(int delta){
@@ -106,41 +104,20 @@ public class Character {
 			}
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && attackTimer > 1000){
+			energy -= 100;
 			gameWorld.createProjectile(x, y, angle);
 			attackTimer = 0;
 		}
 		
 		attackTimer += delta;
 		
-		drawTexture(sprite_1,x, y);
+		gameWorld.drawTexture(sprite_1,x, y, angle, 4, 4);
+		
+		if(energy <= 0 || energy > 1000){
+			ded = true;
+		}
 	}
 	
-	public void drawTexture(Texture newTexture, float x, float y){
-		newTexture.bind();
-		
-		GL11.glPushMatrix();
-		
-		GL11.glTranslated(x + 4, y + 4, 0);
-		
-		GL11.glRotated(angle, 0, 0, 1);
-		
-		GL11.glTranslated(-(x + 4), -(y + 4), 0);
-		
-		GL11.glBegin(GL11.GL_QUADS);
-				
-			GL11.glTexCoord2f(0,0);
-			GL11.glVertex2f(x,y);
-			GL11.glTexCoord2f(1,0);
-			GL11.glVertex2f(x + newTexture.getTextureWidth(),y);
-			GL11.glTexCoord2f(1,1);
-			GL11.glVertex2f(x+newTexture.getTextureWidth(),y+newTexture.getTextureHeight());
-			GL11.glTexCoord2f(0,1);
-			GL11.glVertex2f(x,y+newTexture.getTextureHeight());	
-    		
-    	GL11.glEnd();
-    	
-    	GL11.glPopMatrix();
 	
-	}
 
 }
