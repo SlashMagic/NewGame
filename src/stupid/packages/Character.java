@@ -105,7 +105,7 @@ public class Character {
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && attackTimer > 1000){
 			energy -= 100;
-			gameWorld.createProjectile(x, y, angle);
+			gameWorld.createProjectile(x, y, angle, 100);
 			attackTimer = 0;
 		}
 		

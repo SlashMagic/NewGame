@@ -44,14 +44,6 @@ public class Enemy {
 		enemy = newTexture;
 	}
 	
-	public boolean isColliding(float x1, float y1, float x2, float y2){
-		boolean isColliding = false;
-		if(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) < 7){
-			isColliding = true;
-		}
-		return isColliding;
-	}
-	
 	public void update(int delta){
 				
 		desiredAngle = (float) Math.toDegrees(Math.atan2((x + 4) - (character.getX() + 4), (y + 4) - (character.getY() + 4))) + 90;
@@ -60,9 +52,7 @@ public class Enemy {
 			float tempAngle = desiredAngle - 180;
 			desiredAngle = -180 + tempAngle;
 		}
-		
-		//System.out.println(desiredAngle + " : " + angle);
-		
+
 		if(!(angle < desiredAngle+ 1 && angle>desiredAngle- 1) ){
 			if(desiredAngle > angle){
 				if(Math.abs(desiredAngle - angle) < 180){
@@ -101,7 +91,7 @@ public class Enemy {
 		if(attackTimer > 1000){
 			if(angle < desiredAngle + 2 && angle > desiredAngle - 2){
 				energy -= 100;
-				gameWorld.createProjectile(x, y, -angle);
+				gameWorld.createProjectile(x, y, -angle, 100);
 				attackTimer = 0;
 			}
 		}

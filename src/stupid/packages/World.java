@@ -43,6 +43,14 @@ public class World {
 
 	}
 	
+	public boolean isColliding(float x1, float y1, float x2, float y2 , int distance){
+		boolean isColliding = false;
+		if(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) < distance){
+			isColliding = true;
+		}
+		return isColliding;
+	}
+	
 	public void loadData(){
 		
 		try{
@@ -60,18 +68,25 @@ public class World {
 		}	
 	}
 	
-	public void createProjectile(float x, float y, float angle){
-		projectiles.add(new Projectile(this, x, y, angle, projectile));
+	public void createProjectile(float x, float y, float angle, int energy){
+		projectiles.add(new Projectile(this, x, y, angle, energy, projectile));
 	}
 	
 	public void update(int delta){
 		
 		for(int i = 0; i < enemies.size(); i++){
 			for(int j = 0; j < projectiles.size(); j++){
-				if(enemies.get(i).isColliding(enemies.get(i).getX(), enemies.get(i).getY(), projectiles.get(j).getX(), projectiles.get(j).getY())){
+				if(isColliding(enemies.get(i).getX() + 4, enemies.get(i).getY() + 4, projectiles.get(j).getX(), projectiles.get(j).getY(), 5) && projectiles.get(j).spawnProtection == 0){
+					enemies.get(i).energy += projectiles.get(j).energy;
+					projectiles.remove(j);
 					
 				}
 			}
+			
+			if(enemies.get(i).energy <= 0 || enemies.get(i).energy > 1000){
+				enemies.remove(i);
+			}
+			
 		}
 		
 		drawTexture(background, 0, 0);

@@ -16,6 +16,8 @@ public class Projectile {
 	
 	int energy = 5;
 	
+	int spawnProtection = 10;
+	
 	World gameWorld;
 	
 	final float TOTAL_VELOCITY = 1.2f;
@@ -28,7 +30,7 @@ public class Projectile {
 		return y;
 	}
 	
-	public Projectile(World newWorld, float newX, float newY, float newAngle, Texture newTexture) {
+	public Projectile(World newWorld, float newX, float newY, float newAngle, int newEnergy, Texture newTexture) {
 		
 		gameWorld = newWorld;
 		
@@ -36,6 +38,8 @@ public class Projectile {
 		y = newY;
 		
 		angle = newAngle;
+		
+		energy = newEnergy;
 		
 		projectile = newTexture;
 	}
@@ -49,33 +53,37 @@ public class Projectile {
 		if(x < 2 && xVel < 0){
 			float tempAngle = 90 - angle;
 			angle = 90 + tempAngle;
-			energy -= 1;
+			energy -= 20;
 		}
 		if(y < 2 && yVel < 0){
 			float tempAngle = 0 - angle;
 			angle = 0 + tempAngle;
-			energy -= 1;
+			energy -= 20;
 		}
 		if(x > 236 && xVel > 0){
 			float tempAngle = -90 - angle;
 			angle = -90 + tempAngle;
-			energy -= 1;
+			energy -= 20;
 		}
 		if(y > 130 && yVel > 0){
 			float tempAngle = 180 - angle;
 			angle = 180 + tempAngle;
-			energy -= 1;
+			energy -= 20;
 		}
 		
 		
 		x += xVel;
 		y += yVel;
 		
+		if(spawnProtection > 0){
+			spawnProtection -= 1;
+		}
+		
 		if(energy <= 0){
 			gameWorld.projectiles.remove(this);
 		}
 		
-		gameWorld.drawTexture(projectile, x, y, angle + 90, 1, 2);
+		gameWorld.drawTexture(projectile, x, y, angle + 90, 0, 0);
 
 	}
 	
