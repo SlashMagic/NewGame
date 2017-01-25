@@ -20,7 +20,7 @@ public class Projectile {
 	
 	World gameWorld;
 	
-	final float TOTAL_VELOCITY = 1.2f;
+	final float TOTAL_VELOCITY = 1f;
 	
 	float getX(){
 		return x;
@@ -53,22 +53,22 @@ public class Projectile {
 		if(x < 2 && xVel < 0){
 			float tempAngle = 90 - angle;
 			angle = 90 + tempAngle;
-			energy -= 20;
+			energy -= 2;
 		}
 		if(y < 2 && yVel < 0){
 			float tempAngle = 0 - angle;
 			angle = 0 + tempAngle;
-			energy -= 20;
+			energy -= 2;
 		}
 		if(x > 236 && xVel > 0){
 			float tempAngle = -90 - angle;
 			angle = -90 + tempAngle;
-			energy -= 20;
+			energy -= 2;
 		}
 		if(y > 130 && yVel > 0){
 			float tempAngle = 180 - angle;
 			angle = 180 + tempAngle;
-			energy -= 20;
+			energy -= 2;
 		}
 		
 		

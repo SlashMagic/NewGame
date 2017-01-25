@@ -104,8 +104,10 @@ public class Character {
 			}
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && attackTimer > 1000){
-			energy -= 100;
-			gameWorld.createProjectile(x, y, angle, 100);
+			energy -= 10;
+			int newY = (int)  -((4) * Math.sin(angle * (Math.PI / 180)));
+			int newX = (int)  ((4) * Math.cos(angle * (Math.PI / 180)));
+			gameWorld.createProjectile(x + 4 + newX, y + 4 - newY, angle, 10);
 			attackTimer = 0;
 		}
 		
@@ -116,6 +118,8 @@ public class Character {
 		if(energy <= 0 || energy > 1000){
 			ded = true;
 		}
+		
+		
 	}
 	
 	

@@ -33,6 +33,30 @@ public class Enemy {
 		return y;
 	}
 	
+	float getXVel(){
+		return xVel;
+	}
+	
+	float getYVel(){
+		return yVel;
+	}
+	
+	public void setX(float newX){
+		x = newX;
+	}
+	
+	public void setY(float newY){
+		y = newY;
+	}
+	
+	public void setXVel(float newXVel){
+		xVel = newXVel;
+		}
+	
+	public void setYVel(float newYVel){
+		yVel = newYVel;
+	}
+	
 	public Enemy(World newWorld, Character newCharacter, float newX, float newY, float newXVel, float newYVel, Texture newTexture) {
 		
 		gameWorld = newWorld;
@@ -90,8 +114,10 @@ public class Enemy {
 		
 		if(attackTimer > 1000){
 			if(angle < desiredAngle + 2 && angle > desiredAngle - 2){
-				energy -= 100;
-				gameWorld.createProjectile(x, y, -angle, 100);
+				energy -= 10;
+				int newY = (int) -((4) * Math.sin(angle * (Math.PI / 180)));
+				int newX = (int) ((4) * Math.cos(angle * (Math.PI / 180)));
+				gameWorld.createProjectile(x + 4 + newX, y + 4 + newY, -angle, 10);
 				attackTimer = 0;
 			}
 		}
@@ -114,9 +140,9 @@ public class Enemy {
 		
 		attackTimer += delta;
 		
-		if(energy <= 0 || energy > 1000){
+		/*if(energy <= 0 || energy > 1000){
 			ded = true;
 			
-		}
+		}*/
 	}
 }
