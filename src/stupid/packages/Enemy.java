@@ -17,7 +17,7 @@ public class Enemy {
 	
 	Texture enemy;
 	
-	int energy = 1000;
+	int energy = 100;
 	
 	//boolean ded = false;
 	
@@ -123,15 +123,19 @@ public class Enemy {
 		}
 		if(x < 2 && xVel < 0){
 			xVel = -xVel;
+			energy -= 1;
 		}
 		if(y < 2 && yVel < 0){
 			yVel = -yVel;
+			energy -= 1;
 		}
 		if(x > 230 && xVel > 0){
 			xVel = -xVel;
+			energy -= 1;
 		}
 		if(y > 125 && yVel > 0){
 			yVel = -yVel;
+			energy -= 1;
 		}
 		
 		x += xVel;

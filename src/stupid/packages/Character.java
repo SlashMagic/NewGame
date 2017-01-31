@@ -20,7 +20,7 @@ public class Character {
 	
 	int attackTimer = 0;
 	
-	int energy = 1000;
+	int energy = 100;
 	
 	boolean ded = false;
 	
@@ -30,6 +30,38 @@ public class Character {
 	
 	float getY(){
 		return y;
+	}
+	
+	float getXVel(){
+		return xVel;
+	}
+	
+	float getYVel(){
+		return yVel;
+	}
+	
+	int getEnergy(){
+		return energy;
+	}
+	
+	public void setX(float newX){
+		x = newX;
+	}
+	
+	public void setY(float newY){
+		y = newY;
+	}
+	
+	public void setXVel(float newXVel){
+		xVel = newXVel;
+	}
+	
+	public void setYVel(float newYVel){
+		yVel = newYVel;
+	}
+	
+	public void setEnergy(int newEnergy){
+		energy = newEnergy;
 	}
 	
 	boolean getDed(){
@@ -46,15 +78,19 @@ public class Character {
 		
 		if(x < 2 && xVel < 0){
 			xVel = -xVel;
+			energy -= 1;
 		}
 		if(y < 2 && yVel < 0){
 			yVel = -yVel;
+			energy -= 1;
 		}
 		if(x > 230 && xVel > 0){
 			xVel = -xVel;
+			energy -= 1;
 		}
 		if(y > 125 && yVel > 0){
 			yVel = -yVel;
+			energy -= 1;
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_D)){
@@ -95,8 +131,6 @@ public class Character {
 			}
 		}
 		
-	
-		
 		System.out.println(delta);
 			x += xVel;
 			y += yVel;
@@ -126,8 +160,9 @@ public class Character {
 		
 		gameWorld.drawTexture(sprite_1,x, y, angle, 4, 4);
 		
-		if(energy <= 0 || energy > 1000){
-			ded = true;
+		if(energy <= 0 || energy > 100){
+			gameWorld.play = false;
+			gameWorld.lost = true;
 		}
 		
 		

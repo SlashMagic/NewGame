@@ -79,7 +79,6 @@ public class Main {
 			
 			gameWorld.update(getDelta());
 			
-			
 			Display.update();
 			
 			Display.sync(144);

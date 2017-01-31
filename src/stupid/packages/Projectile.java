@@ -16,7 +16,7 @@ public class Projectile {
 	
 	int energy = 5;
 	
-	int spawnProtection = 10;
+	int spawnProtection = 5;
 	
 	World gameWorld;
 	
@@ -28,6 +28,10 @@ public class Projectile {
 	
 	float getY(){
 		return y;
+	}
+	
+	int getEnergy(){
+		return energy;
 	}
 	
 	public Projectile(World newWorld, float newX, float newY, float newAngle, int newEnergy, Texture newTexture) {
