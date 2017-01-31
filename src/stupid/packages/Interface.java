@@ -14,6 +14,8 @@ public class Interface {
 	Texture button;
 	Texture energyOutline;
 	Texture mouseCursor;
+	Texture sprite_1;
+	Texture enemy;
 	
 	boolean help = false;
 	
@@ -28,7 +30,7 @@ public class Interface {
 	float mouseXStep = 0;
 	float mouseYStep = 0;
 	
-	public Interface(World newWorld, Character newCharacter, Texture newButton, Texture newEnergy, Texture newMouse) {
+	public Interface(World newWorld, Character newCharacter, Texture newButton, Texture newEnergy, Texture newMouse, Texture newSprite, Texture newEnemy) {
 		gameWorld = newWorld;
 		
 		gameCharacter = newCharacter;
@@ -38,6 +40,10 @@ public class Interface {
 		energyOutline = newEnergy;
 		
 		mouseCursor = newMouse;
+		
+		sprite_1 = newSprite;
+		
+		enemy = newEnemy;
 		
 		Mouse.setGrabbed(true);
 		
@@ -91,6 +97,10 @@ public class Interface {
 				for(int i = 0; i < helpElements.size(); i ++){
 					helpElements.get(i).update();
 				}
+				
+				gameWorld.drawTexture(sprite_1, 114, 10, 0, 4, 4);
+				gameWorld.drawTexture(enemy, 114, 23, 0, 4, 4);
+				
 				drawMouse();
 			}
 		}

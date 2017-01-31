@@ -45,7 +45,7 @@ public class World {
 		
 		gameCharacter = new Character(this, sprite_1);
 		
-		gameInterface = new Interface(this, gameCharacter, button, energyOutline, mouseCursor);
+		gameInterface = new Interface(this, gameCharacter, button, energyOutline, mouseCursor, sprite_1, enemy);
 	}
 	
 	public void loadData(){
