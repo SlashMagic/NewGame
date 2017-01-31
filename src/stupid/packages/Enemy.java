@@ -19,7 +19,7 @@ public class Enemy {
 	
 	int energy = 1000;
 	
-	boolean ded = false;
+	//boolean ded = false;
 	
 	World gameWorld;
 	

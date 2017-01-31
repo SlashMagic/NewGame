@@ -42,7 +42,7 @@ public class Character {
 		gameWorld = newWorld;
 	}
 	
-	public void update(int delta){
+	public void update(float delta){
 		
 		if(x < 2 && xVel < 0){
 			xVel = -xVel;
@@ -56,40 +56,51 @@ public class Character {
 		if(y > 125 && yVel > 0){
 			yVel = -yVel;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-			if(xVel < 0){
-				x += xVel - 0.25;
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_D)){
+			
+			if(Keyboard.isKeyDown(Keyboard.KEY_W)){
+				yVel -= 0.002 * delta;
 			}
-			else{
-				x += xVel + 0.25;
+			else if(Keyboard.isKeyDown(Keyboard.KEY_S)){
+				yVel += 0.002 * delta;
 			}
-			if(yVel < 0){
-				y += yVel - 0.25;
+			
+			if(Keyboard.isKeyDown(Keyboard.KEY_A)){
+				xVel -= 0.002 * delta;
 			}
-			else{
-				y += yVel + 0.25;
-			}
-		}
-		else if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-			if(xVel < 0){
-				x += xVel + 0.25;
-			}
-			else{
-				x += xVel - 0.25;
-			}
-			if(yVel < 0){
-				y += yVel + 0.25;
-
-			}
-			else{
-				y += yVel - 0.25;
-
+			if(Keyboard.isKeyDown(Keyboard.KEY_D)){
+				xVel += 0.002 * delta;
 			}
 		}
 		else{
+	
+			if(xVel > 0){
+				xVel -= 0.002 * delta;
+			}else if(xVel < 0){
+				xVel += 0.002 * delta;
+			}
+			
+			if(yVel > 0){
+				yVel -= 0.002 * delta;
+			} else if(yVel < 0){
+				yVel += 0.002 * delta;
+			}
+			
+			if(xVel < -0.01 && xVel > 0.01){
+				xVel = 0;
+			}
+			if(yVel < -0.01 && yVel > 0.01){
+				yVel = 0;
+			}
+		}
+		
+	
+		
+		System.out.println(delta);
 			x += xVel;
 			y += yVel;
-		}
+		
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
 			angle -= 7;

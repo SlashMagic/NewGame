@@ -79,6 +79,7 @@ public class Main {
 			
 			gameWorld.update(getDelta());
 			
+			
 			Display.update();
 			
 			Display.sync(144);
@@ -107,6 +108,8 @@ public class Main {
 		long time = getTime();
 		int delta = (int)(time - lastFrame);
 		lastFrame = time;
+		if(delta < 0 || delta > 100)
+			delta=0;
 		return delta;
 	}
 	

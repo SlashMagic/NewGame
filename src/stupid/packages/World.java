@@ -85,9 +85,9 @@ public class World {
 				}
 			}
 			
-			if(enemies.get(i).energy <= 0 || enemies.get(i).energy > 1000){
+			/*if(enemies.get(i).energy <= 0 || enemies.get(i).energy > 1000){
 				enemies.remove(i);
-			}
+			}*/
 			
 		}
 		
@@ -109,39 +109,33 @@ public class World {
 					
 					if(isColliding(x1, y1, x2, y2, 8)){
 						
-						double A = Math.atan2(y1 - y2, x1 - x2);
+						double collisionAngle = Math.atan2(y2 - y1, x2 - x1);
 						
-						double u1 = Math.sqrt(Math.pow(xVel1, 2) + Math.pow(yVel1, 2));
-						double u2 = Math.sqrt(Math.pow(xVel2, 2) + Math.pow(yVel2, 2));
+						double magnitude1 = Math.sqrt(xVel1 * xVel1 + yVel1 * yVel1);
+						double magnitude2 = Math.sqrt(xVel2*xVel2 + yVel2 * yVel2);
 						
-						double v1x = (u1 * Math.cos(angle1 - A));
-						double v1y = (u1 * Math.sin(angle1 - A));
+						double newXVel1 = magnitude1 * Math.cos(angle1 - collisionAngle);
+						double newYVel1 = magnitude1 * Math.sin(angle1 - collisionAngle);
 						
-						double v2x = (u2 * Math.cos(angle2 - A));
-						double v2y = (u2 * Math.sin(angle2 - A));
+						double newXVel2 = magnitude2 * Math.cos(angle2 - collisionAngle);
+						double newYVel2 = magnitude2 * Math.sin(angle2 - collisionAngle);
 						
-						double f1x = ((v1x * (1 - 1)) + (2 * 1 * v2x) / (1 + 1));
+						double finalXVel1 = newXVel2;
+						double finalYVel1 = newYVel1;
 						
-						double f2x = ((v2x * (1 - 1)) + (2 * 1 * v1x) / (1 + 1));
+						double finalXVel2 = newXVel1;
+						double finalYVel2 = newYVel2;
 						
-						double v1 = Math.sqrt((Math.pow(f1x, 2) * Math.pow(f1x, 2)) + (v1y * Math.pow(v1y, 2)));
+						xVel1 = (float) (Math.cos(collisionAngle) * finalXVel1 + Math.cos(collisionAngle + Math.PI / 2) * finalYVel1);
+						yVel1 = (float) (Math.sin(collisionAngle) * finalXVel1 + Math.sin(collisionAngle + Math.PI/2) * finalYVel1);
 						
-						double v2 = Math.sqrt((Math.pow(f2x, 2) * Math.pow(f2x, 2)) + (v2y * Math.pow(v2y, 2)));
-						
-						double D1 = Math.atan2(v1y, f1x) + A;
-						
-						double D2 = Math.atan2(v2y, f2x) + A;
-						
-						float newXVel1 = (float) (v1 * Math.cos(D1));
-						float newYVel1 = (float) (v1 * Math.sin(D1));
-						
-						float newXVel2 = (float) (v2 * Math.cos(D2));
-						float newYVel2 = (float) (v2 * Math.sin(D2));
+						xVel2 = (float) (Math.cos(collisionAngle) * finalXVel2 + Math.cos(collisionAngle + Math.PI / 2) * finalYVel2);
+						yVel2 = (float) (Math.sin(collisionAngle) * finalXVel2 + Math.sin(collisionAngle + Math.PI / 2) * finalYVel2);
 						
 						float collisionX = (enemies.get(i).getX() + enemies.get(j).getX()) / 2;		
 						float collisionY = (enemies.get(i).getY() + enemies.get(j).getY()) / 2;
 						
-						System.out.println("v1y : " + v1y + " v2y : " + v2y + " v1 : " + v1 + " v2 : " + v2 + " xVel1 : " + newXVel1 + " yVel1 : " + newYVel1 + " xVel2 : " + newXVel2 + " yVel2 : " + newYVel2) ;
+						//System.out.println("v1y : " + v1y + " v2y : " + v2y + " v1 : " + v1 + " v2 : " + v2 + " xVel1 : " + newXVel1 + " yVel1 : " + newYVel1 + " xVel2 : " + newXVel2 + " yVel2 : " + newYVel2) ;
 						
 						//float iTempX = (2 * 1 * enemies.get(j).getXVel()) / 2;
 						//float iTempY = (2 * 1 * enemies.get(j).getYVel()) / 2;
@@ -149,17 +143,17 @@ public class World {
 						//float jTempX = (2 * 1 * enemies.get(i).getXVel()) / 2;
 						//float jTempY = (2 * 1 * enemies.get(i).getYVel()) / 2;
 						
-						enemies.get(i).setXVel(newXVel1);
-						enemies.get(i).setYVel(newYVel1);
+						enemies.get(i).setXVel(xVel1);
+						enemies.get(i).setYVel(yVel1);
 						
-						enemies.get(i).setX(enemies.get(i).getX() + newXVel1);
-						enemies.get(i).setY(enemies.get(i).getY() + newYVel1);
+						enemies.get(i).setX(enemies.get(i).getX() + xVel1);
+						enemies.get(i).setY(enemies.get(i).getY() + yVel1);
 						
-						enemies.get(j).setXVel(newXVel2);
-						enemies.get(j).setYVel(newYVel2);
+						enemies.get(j).setXVel(xVel2);
+						enemies.get(j).setYVel(yVel2);
 						
-						enemies.get(j).setX(enemies.get(j).getX() + newXVel2);
-						enemies.get(j).setY(enemies.get(j).getY() + newYVel2);
+						enemies.get(j).setX(enemies.get(j).getX() + xVel2);
+						enemies.get(j).setY(enemies.get(j).getY() + yVel2);
 						
 						}
 					}
